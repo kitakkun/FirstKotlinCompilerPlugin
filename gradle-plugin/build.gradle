@@ -4,10 +4,6 @@ plugins {
 apply plugin: "kotlin-kapt"
 apply plugin: "java-gradle-plugin"
 
-repositories {
-    mavenCentral()
-}
-
 gradlePlugin {
     plugins {
         myPlugin {

@@ -1,2 +1,8 @@
+dependencyResolutionManagement {
+    repositories {
+        mavenCentral()
+    }
+}
+
 include(":gradle-plugin")
 include(":kotlin-plugin")
