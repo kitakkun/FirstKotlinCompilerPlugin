@@ -1,0 +1,26 @@
+plugins {
+    id "org.jetbrains.kotlin.jvm" version "1.9.0"
+}
+apply plugin: "kotlin-kapt"
+apply plugin: "java-gradle-plugin"
+
+repositories {
+    mavenCentral()
+}
+
+gradlePlugin {
+    plugins {
+        myPlugin {
+            id = "my-plugin"
+            implementationClass = "com.example.MyPlugin"
+        }
+    }
+}
+
+dependencies {
+    implementation("org.jetbrains.kotlin:kotlin-stdlib:1.9.0")
+    implementation("org.jetbrains.kotlin:kotlin-gradle-plugin-api:1.9.0")
+
+    compileOnly("com.google.auto.service:auto-service:1.1.1")
+    kapt("com.google.auto.service:auto-service:1.1.1")
+}
