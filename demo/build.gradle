@@ -1,0 +1,24 @@
+buildscript {
+    repositories {
+        mavenLocal()
+    }
+    dependencies {
+        classpath("com.example:my-plugin:1.0.0")
+    }
+}
+
+plugins {
+    id("org.jetbrains.kotlin.jvm")
+}
+
+repositories {
+    mavenCentral()
+    mavenLocal()
+}
+
+apply plugin: "my-plugin"
+
+myPlugin {
+    enabled = true
+    annotations = ['HogeAnnotation']
+}
