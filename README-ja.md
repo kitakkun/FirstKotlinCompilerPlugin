@@ -49,7 +49,7 @@ myPlugin {
 }
 ```
 
-### KTS
+#### KTS
 
 ```kotlin
 configure<MyPluginExtension> {
