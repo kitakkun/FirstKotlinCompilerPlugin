@@ -1,9 +1,8 @@
 plugins {
-    id "org.jetbrains.kotlin.jvm"
-    id "maven-publish"
+    kotlin("jvm")
+    kotlin("kapt")
+    `maven-publish`
 }
-
-apply plugin: "kotlin-kapt"
 
 dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib:1.9.0")
@@ -16,8 +15,8 @@ dependencies {
 
 publishing {
     publications {
-        create(MavenPublication) {
-            from components.kotlin
+        register("mavenJava", MavenPublication::class) {
+            from(components["kotlin"])
             groupId = "com.example"
             artifactId = "kotlin-plugin"
             version = "1.0.0"
