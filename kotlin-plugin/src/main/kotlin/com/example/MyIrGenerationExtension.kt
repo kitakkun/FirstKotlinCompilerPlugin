@@ -8,10 +8,13 @@ import org.jetbrains.kotlin.ir.IrStatement
 import org.jetbrains.kotlin.ir.declarations.IrDeclarationOrigin
 import org.jetbrains.kotlin.ir.declarations.IrFunction
 import org.jetbrains.kotlin.ir.declarations.IrModuleFragment
+import org.jetbrains.kotlin.ir.declarations.IrSimpleFunction
 import org.jetbrains.kotlin.ir.declarations.impl.IrVariableImpl
 import org.jetbrains.kotlin.ir.expressions.IrBlockBody
 import org.jetbrains.kotlin.ir.expressions.impl.IrCallImpl
+import org.jetbrains.kotlin.ir.expressions.impl.IrGetValueImpl
 import org.jetbrains.kotlin.ir.symbols.impl.IrVariableSymbolImpl
+import org.jetbrains.kotlin.ir.types.isNullableAny
 import org.jetbrains.kotlin.ir.util.hasAnnotation
 import org.jetbrains.kotlin.ir.visitors.transformChildrenVoid
 import org.jetbrains.kotlin.name.FqName
@@ -41,8 +44,17 @@ class MyIrTransformer(
         if (!hasAnnotation) return transformed
         val body = declaration.body as? IrBlockBody ?: return transformed
 
-        val currentTimeMillisFunction = pluginContext.referenceFunctions(FqName("kotlin.system.currentTimeMillis"))
-            .single { it.owner.valueParameters.isEmpty() }
+        val systemClass = pluginContext.referenceClass(FqName("java.lang.System"))
+        val currentTimeMillisFunction = systemClass?.owner?.declarations?.filterIsInstance<IrSimpleFunction>()
+            ?.singleOrNull { it.name == Name.identifier("currentTimeMillis") && it.valueParameters.isEmpty() }?.symbol
+            ?: error("currentTimeMillis not found")
+
+        val printlnFunction = pluginContext.referenceFunctions(FqName("kotlin.io.println"))
+            .firstOrNull {
+                it.owner.name == Name.identifier("println") &&
+                        it.owner.valueParameters.size == 1 &&
+                        it.owner.valueParameters.single().type.isNullableAny()
+            } ?: error("println function not found")
 
         val currentTimeMillisCall = IrCallImpl(
             startOffset = declaration.startOffset,
@@ -67,8 +79,29 @@ class MyIrTransformer(
 
         startTimeVariable.initializer = currentTimeMillisCall
 
-        body.statements.add(0, startTimeVariable)
+        val printlnCall = IrCallImpl(
+            startOffset = declaration.startOffset,
+            endOffset = declaration.endOffset,
+            type = pluginContext.irBuiltIns.unitType,
+            symbol = printlnFunction,
+            typeArgumentsCount = 0,
+            valueArgumentsCount = 1,
+        )
 
-        return transformed
+        printlnCall.putValueArgument(
+            index = 0,
+            valueArgument = IrGetValueImpl(
+                startOffset = declaration.startOffset,
+                endOffset = declaration.endOffset,
+                symbol = startTimeVariable.symbol
+            )
+        )
+
+        startTimeVariable.parent = declaration
+
+        body.statements.add(0, startTimeVariable)
+        body.statements.add(1, printlnCall)
+
+        return declaration
     }
 }
