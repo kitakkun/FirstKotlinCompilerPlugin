@@ -1,5 +1,7 @@
 # FirstKotlinCompilerPlugin
 
+[日本語版はこちら](README-ja.md)
+
 This repository contains a simple Kotlin compiler plugin implementation
 for the purpose of demonstrating how to write a Kotlin compiler plugin.
 
