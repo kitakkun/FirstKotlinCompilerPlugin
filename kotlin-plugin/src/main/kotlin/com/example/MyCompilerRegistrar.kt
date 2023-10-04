@@ -8,6 +8,7 @@ import org.jetbrains.kotlin.config.CompilerConfiguration
 
 // ComponentRegistrar is deprecated.
 // instead of it, we must use CompilerPluginRegistrar.
+@Suppress("unused")
 @OptIn(ExperimentalCompilerApi::class)
 @AutoService(CompilerPluginRegistrar::class)
 class MyCompilerRegistrar : CompilerPluginRegistrar() {
