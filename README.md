@@ -41,10 +41,21 @@ fun main() {
 If `enabled` is set to `false`, the compiler plugin will not be applied.
 `annotations` is a list of annotation classes to be processed by the compiler plugin.
 
+#### Groovy
+
 ```groovy
 myPlugin {
     enabled = true
     annotations = ["HogeAnnotation"]
+}
+```
+
+### KTS
+
+```kotlin
+configure<MyPluginExtension> {
+    enabled = true
+    annotations = listOf("HogeAnnotation")
 }
 ```
 

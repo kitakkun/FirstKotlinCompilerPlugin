@@ -40,10 +40,21 @@ fun main() {
 `enabled`が`false`に設定されている場合、コンパイラプラグインは適用されません。
 `annotations`には、コンパイラプラグインで処理するアノテーションクラスのリストを指定します。
 
+#### Groovy
+
 ```groovy
 myPlugin {
     enabled = true
     annotations = ["HogeAnnotation"]
+}
+```
+
+### KTS
+
+```kotlin
+configure<MyPluginExtension> {
+    enabled = true
+    annotations = listOf("HogeAnnotation")
 }
 ```
 
