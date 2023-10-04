@@ -16,9 +16,14 @@ repositories {
     mavenLocal()
 }
 
+apply plugin: 'application'
 apply plugin: "my-plugin"
 
 myPlugin {
     enabled = true
     annotations = ['HogeAnnotation']
+}
+
+application {
+    mainClassName = 'MainKt'
 }
