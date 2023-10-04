@@ -72,7 +72,7 @@ configure<MyPluginExtension> {
 By default, you will see the output like this:
 
 ```
-> Task :demo:run
+> Task :run
 1696419167450
 ```
 

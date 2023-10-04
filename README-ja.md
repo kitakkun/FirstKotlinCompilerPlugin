@@ -71,7 +71,7 @@ configure<MyPluginExtension> {
 デフォルトでは、以下のような出力が表示されます。
 
 ```
-> Task :demo:run
+> Task :run
 1696419167450
 ```
 
