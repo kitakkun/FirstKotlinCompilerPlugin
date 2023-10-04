@@ -3,7 +3,7 @@ pluginManagement {
         mavenCentral()
     }
     plugins {
-        id "org.jetbrains.kotlin.jvm" version "1.9.0" apply false
+        kotlin("jvm") version "1.9.0" apply false
     }
 }
 
@@ -12,7 +12,3 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
-
-include(":gradle-plugin")
-include(":kotlin-plugin")
-include(":demo")

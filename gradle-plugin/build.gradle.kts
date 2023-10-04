@@ -1,13 +1,13 @@
 plugins {
-    id "org.jetbrains.kotlin.jvm"
-    id "maven-publish"
+    kotlin("jvm")
+    kotlin("kapt")
+    `maven-publish`
+    `java-gradle-plugin`
 }
-apply plugin: "kotlin-kapt"
-apply plugin: "java-gradle-plugin"
 
 gradlePlugin {
     plugins {
-        myPlugin {
+        create("myPlugin") {
             id = "my-plugin"
             implementationClass = "com.example.MyPlugin"
         }
@@ -15,7 +15,7 @@ gradlePlugin {
 }
 
 dependencies {
-    implementation("org.jetbrains.kotlin:kotlin-stdlib:1.9.0")
+    implementation(kotlin("stdlib", "1.9.0"))
     implementation("org.jetbrains.kotlin:kotlin-gradle-plugin-api:1.9.0")
 
     compileOnly("com.google.auto.service:auto-service:1.1.1")
@@ -24,8 +24,8 @@ dependencies {
 
 publishing {
     publications {
-        create(MavenPublication) {
-            from components.kotlin
+        register("mavenJava", MavenPublication::class) {
+            from(components["kotlin"])
             groupId = "com.example"
             artifactId = "my-plugin"
             version = "1.0.0"
