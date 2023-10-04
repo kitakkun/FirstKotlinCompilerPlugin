@@ -1,5 +1,6 @@
 plugins {
     id "org.jetbrains.kotlin.jvm"
+    id "maven-publish"
 }
 
 apply plugin: "kotlin-kapt"
@@ -11,4 +12,18 @@ dependencies {
 
     compileOnly("com.google.auto.service:auto-service:1.1.1")
     kapt("com.google.auto.service:auto-service:1.1.1")
+}
+
+publishing {
+    publications {
+        create(MavenPublication) {
+            from components.kotlin
+            groupId = "com.example"
+            artifactId = "kotlin-plugin"
+            version = "1.0.0"
+        }
+    }
+    repositories {
+        mavenLocal()
+    }
 }

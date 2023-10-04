@@ -24,12 +24,11 @@ dependencies {
 
 publishing {
     publications {
-        create("mavenJava", MavenPublication) {
-            from(components["java"])
-
-            it.groupId = "com.example"
-            it.artifactId = "my-plugin"
-            it.version = "1.0.0"
+        create(MavenPublication) {
+            from components.kotlin
+            groupId = "com.example"
+            artifactId = "my-plugin"
+            version = "1.0.0"
         }
     }
     repositories {
