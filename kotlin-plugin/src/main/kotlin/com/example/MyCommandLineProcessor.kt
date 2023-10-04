@@ -36,8 +36,8 @@ class MyCommandLineProcessor : CommandLineProcessor {
         value: String,
         configuration: CompilerConfiguration,
     ) = when (option.optionName) {
-       "enabled" -> configuration.put(KEY_ENABLED, value.toBoolean())
-         "myPluginAnnotation" -> configuration.appendList(KEY_ANNOTATIONS, value)
-         else -> error("Unexpected config option ${option.optionName}")
+        "enabled" -> configuration.put(KEY_ENABLED, value.toBoolean())
+        "myPluginAnnotation" -> configuration.appendList(KEY_ANNOTATIONS, value)
+        else -> error("Unexpected config option ${option.optionName}")
     }
 }
