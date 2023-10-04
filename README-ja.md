@@ -9,7 +9,10 @@
 
 - `gradle-plugin`: Gradleプラグインの実装部分になります。Kotlinコンパイラプラグインを任意のプロジェクトに適用するためのものです。
 - `kotlin-plugin`: Kotlinコンパイラプラグインの実装部分になります。
-- `demo`: コンパイラプラグインの動作を確認するためのデモプロジェクトです。
+
+> **Note**
+> `demo`は、コンパイラプラグインの動作を確認するための独立したプロジェクトです。
+> コンパイラプラグインの実装とは直接関係ありません。
 
 ## プラグインの挙動
 
@@ -60,8 +63,10 @@ configure<MyPluginExtension> {
 
 ### ローカル環境でのテスト方法
 
-1. `./gradlew publishToMavenLocal`を実行して、`gradle-plugin`と`kotlin-plugin`をmaven localに公開します。
-2. `./gradlew demo:run`を実行して、コンパイラプラグインの動作を確認します。
+1. `./gradlew publishToMavenLocal`をリポジトリのルートディレクトリで実行して、`gradle-plugin`と`kotlin-plugin`をmaven
+   localに公開します。
+2. `cd demo`を実行して、`demo`プロジェクトのルートディレクトリに移動します。
+3. `./gradlew run`を実行して、コンパイラプラグインの動作を確認します。
 
 デフォルトでは、以下のような出力が表示されます。
 

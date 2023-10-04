@@ -9,7 +9,10 @@ for the purpose of demonstrating how to write a Kotlin compiler plugin.
 
 - `gradle-plugin`: Gradle plugin to apply the Kotlin compiler plugin to any projects.
 - `kotlin-plugin`: Custom compiler plugin implementation.
-- `demo`: Demo project to see the compiler plugin in action.
+
+> **Note**
+> `demo` is an independent project to test the compiler plugin.
+> It is not a part of the compiler plugin itself.
 
 ## How it modifies the code
 
@@ -61,8 +64,10 @@ configure<MyPluginExtension> {
 
 ### How to test on your local machine
 
-1. Run `./gradlew publishToMavenLocal` to publish `gradle-plugin` and `kotlin-plugin` to maven local.
-2. Run `./gradlew demo:run` to see the compiler plugin in action.
+1. Run `./gradlew publishToMavenLocal` at the root directory to publish `gradle-plugin`
+   and `kotlin-plugin` to maven local.
+2. Run `cd demo` to move to the root directory of the `demo` project.
+3. Run `./gradlew run` to see the compiler plugin in action.
 
 By default, you will see the output like this:
 
