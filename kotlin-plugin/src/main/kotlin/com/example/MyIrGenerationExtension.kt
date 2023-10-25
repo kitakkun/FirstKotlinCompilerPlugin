@@ -1,9 +1,9 @@
 package com.example
 
 import org.jetbrains.kotlin.backend.common.IrElementTransformerVoidWithContext
-import org.jetbrains.kotlin.backend.common.extensions.FirIncompatiblePluginAPI
 import org.jetbrains.kotlin.backend.common.extensions.IrGenerationExtension
 import org.jetbrains.kotlin.backend.common.extensions.IrPluginContext
+import org.jetbrains.kotlin.descriptors.runtime.structure.classId
 import org.jetbrains.kotlin.ir.IrStatement
 import org.jetbrains.kotlin.ir.declarations.IrDeclarationOrigin
 import org.jetbrains.kotlin.ir.declarations.IrFunction
@@ -17,6 +17,7 @@ import org.jetbrains.kotlin.ir.symbols.impl.IrVariableSymbolImpl
 import org.jetbrains.kotlin.ir.types.isNullableAny
 import org.jetbrains.kotlin.ir.util.hasAnnotation
 import org.jetbrains.kotlin.ir.visitors.transformChildrenVoid
+import org.jetbrains.kotlin.name.CallableId
 import org.jetbrains.kotlin.name.FqName
 import org.jetbrains.kotlin.name.Name
 
@@ -37,20 +38,24 @@ class MyIrTransformer(
     private val annotations: List<String>,
     private val pluginContext: IrPluginContext,
 ) : IrElementTransformerVoidWithContext() {
-    @OptIn(FirIncompatiblePluginAPI::class)
     override fun visitFunctionNew(declaration: IrFunction): IrStatement {
         val transformed = super.visitFunctionNew(declaration)
         val hasAnnotation = annotations.any { declaration.hasAnnotation(FqName(it)) }
         if (!hasAnnotation) return transformed
         val body = declaration.body as? IrBlockBody ?: return transformed
 
-        val systemClass = pluginContext.referenceClass(FqName("java.lang.System"))
+        val systemClass = pluginContext.referenceClass(java.lang.System::class.java.classId)
         val currentTimeMillisFunction = systemClass?.owner?.declarations?.filterIsInstance<IrSimpleFunction>()
             ?.singleOrNull { it.name == Name.identifier("currentTimeMillis") && it.valueParameters.isEmpty() }?.symbol
             ?: error("currentTimeMillis not found")
 
-        val printlnFunction = pluginContext.referenceFunctions(FqName("kotlin.io.println"))
-            .firstOrNull {
+        val printlnFunction =
+            pluginContext.referenceFunctions(
+                CallableId(
+                    packageName = FqName("kotlin.io"),
+                    callableName = Name.identifier("println")
+                )
+            ).firstOrNull {
                 it.owner.name == Name.identifier("println") &&
                         it.owner.valueParameters.size == 1 &&
                         it.owner.valueParameters.single().type.isNullableAny()
