@@ -8,7 +8,7 @@ plugins {
 gradlePlugin {
     plugins {
         create("myPlugin") {
-            id = "my-plugin"
+            id = "com.example.my-plugin"
             implementationClass = "com.example.MyPlugin"
         }
     }
@@ -26,8 +26,8 @@ publishing {
     publications {
         register("mavenJava", MavenPublication::class) {
             from(components["kotlin"])
-            groupId = "com.example"
-            artifactId = "my-plugin"
+            groupId = "com.example.my-plugin"
+            artifactId = "com.example.my-plugin.gradle.plugin"
             version = "1.0.0"
         }
     }

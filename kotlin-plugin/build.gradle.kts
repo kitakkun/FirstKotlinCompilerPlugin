@@ -17,7 +17,7 @@ publishing {
     publications {
         register("mavenJava", MavenPublication::class) {
             from(components["kotlin"])
-            groupId = "com.example"
+            groupId = "com.example.my-plugin"
             artifactId = "kotlin-plugin"
             version = "1.0.0"
         }

@@ -53,7 +53,7 @@ class MyPlugin : KotlinCompilerPluginSupportPlugin {
 
     override fun getPluginArtifact(): SubpluginArtifact {
         return SubpluginArtifact(
-            groupId = "com.example",
+            groupId = "com.example.my-plugin",
             artifactId = "kotlin-plugin",
             version = "1.0.0",
         )
