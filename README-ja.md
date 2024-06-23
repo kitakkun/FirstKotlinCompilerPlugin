@@ -1,4 +1,6 @@
-# FirstKotlinCompilerPlugin
+# FirstKotlinCompilerPlugin（アーカイブ済み）
+
+# このリポジトリはメンテナンスが終了しています。代わりに [greeting-plugin](https://github.com/kitakkun/greeting-plugin) をご参考ください。
 
 [English version is here](README.md)
 
